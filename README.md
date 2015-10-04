@@ -6,6 +6,8 @@ use ember, requirejs, bootstrap, jquery, express, mongoose
 https://github.com/eguneys/gulp-ember-requirejs
 https://github.com/fernandogmar/Emberjs-RequireJS
 
+- everything must run in mobile and desktop
+
 # admin page
 - show all drivers, there status and location
 
