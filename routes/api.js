@@ -6,7 +6,10 @@ var services = require('../services');
 /* Posts routes */
 router.route('/posts')  
     .post(function(req,res) { posts.addPost(req,res) })
-    .get(function(req,res) { posts.getAllPosts(req,res) });
+    .get(function(req,res) {
+    console.log('get for posts'); 
+    services.posts.getAllPosts(req,res)
+     });
 
 /* Single post routes */
 router.route('/posts/:post_id')  
