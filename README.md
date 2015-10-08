@@ -11,9 +11,7 @@ https://github.com/fernandogmar/Emberjs-RequireJS
 setup: followed this guide connorbrewster.me/nodejs-rest-server-emberjs/
 using the ember-cli: http://www.ember-cli.com/user-guide/
 
-- maybe clients ust be split into different ember apps
-- now it is single page and based on url /admin /customer /driver
-- ensure resources like css, js only to load as required for targeted url
+- client are split into different apps (driver, customer, admin)
 
 - start the server by
 > cd xdrive
@@ -65,8 +63,12 @@ Drive: id, driverId, starttime, endtime, coords: [{time, [coord]}], requestId (m
 
 CustomerRequest: id, forWhen (time), forWhere (coord), toWhere (coord)
 
+Authentication:
+- sessions must be stored in monogodb, and cleaned up when expired
+ look here http://stackoverflow.com/questions/9525001/nodejs-express-mongo-session-storage
 
 
+##
 Fee: either rent the code and pay x-percent for each drive or
 buy full app (fixed price - expensive!)
 In any case must buy initial license.
