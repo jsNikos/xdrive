@@ -10,6 +10,7 @@ var http = require('http');
 var WebSocketServer = require('websocket').server;
 var WebSocketRouter = require('websocket/lib/WebSocketRouter');
 var services = require('../services');
+var broadcasterService = services.broadcasterService;
 
 /**
  * Get port from environment and store in Express.
@@ -42,9 +43,9 @@ var wsServer = new WebSocketServer({
 var router = new WebSocketRouter();
 router.attachServer(wsServer);
 
-router.mount('/ws/driver', null, services.broadcasterService.addAuthenticatedConnection);
-router.mount('/ws/admin', null, services.broadcasterService.addAuthenticatedConnection);
-router.mount('/ws/customer', null, services.broadcasterService.addConnection);
+router.mount('/ws/driver', null, broadcasterService.addAuthenticatedConnection.bind(broadcasterService));
+router.mount('/ws/admin', null, broadcasterService.addAuthenticatedConnection.bind(broadcasterService));
+router.mount('/ws/customer', null, broadcasterService.addConnection.bind(broadcasterService));
 
 /**
  * Normalize a port into a number, string, or false.

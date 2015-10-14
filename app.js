@@ -7,13 +7,15 @@ var bodyParser = require('body-parser');
 var api = require('./routes/api');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-
-var mongoose = require('mongoose');  
-mongoose.connect('mongodb://localhost/test');
+var mongoose = require('mongoose');
 
 var app = express();
 // globals
-var sessionSecret = 'verysecret$571'; 
+var sessionSecret = 'verysecret$571';
+var dataBaseUrl = 'mongodb://localhost/test';
+app.set('sessionExpirationIntervalMillis', 5000);
+
+setupDBConnection();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,34 +25,43 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(session({
-    store: new MongoStore({
-    	    mongooseConnection: mongoose.connection,
-    		autoRemove: 'disabled' }),
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: true
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    autoRemove: 'disabled'
+  }),
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: true
 }));
 app.use(allowCrossDomain);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 
+function setupDBConnection() {
+  mongoose.connect(dataBaseUrl);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function(callback) {
+    console.log('connected to mongo: ' + dataBaseUrl);
+  });
+}
 
+if (app.get('env') === 'development') {
+  function allowCrossDomain(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, Content-Length, X-Requested-With');
 
-
-
-function allowCrossDomain(req, res, next) {  
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, Content-Length, X-Requested-With');
-
-  // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
-    res.sendStatus(200);
-  } else {
-    next();
+    if ('OPTIONS' == req.method) {
+      res.sendStatus(200);
+    } else {
+      next();
+    }
   }
 }
 
@@ -84,6 +95,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
