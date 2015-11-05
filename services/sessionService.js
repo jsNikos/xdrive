@@ -40,7 +40,7 @@ class SessionService extends utils.EventEmitter {
 	removeSession(sessionId){
 		return Session.remove({id: sessionId})
 				          .exec()
-									.then(() => {                    
+									.then(() => {
 												this.emit(this.destroy);
 									});
 	}
