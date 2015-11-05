@@ -2,24 +2,19 @@
 xdrive
 
 # dev
-use ember, requirejs, bootstrap, jquery, express, mongoose
-https://github.com/eguneys/gulp-ember-requirejs
-https://github.com/fernandogmar/Emberjs-RequireJS
+use vue/router, requirejs, bootstrap, jquery, express, mongoose
 
 - everything must run in mobile and desktop
 
-setup: followed this guide connorbrewster.me/nodejs-rest-server-emberjs/
-using the ember-cli: http://www.ember-cli.com/user-guide/
-
 - client are split into different apps (driver, customer, admin)
+  but all hosted in publice
+
+- use this for the map http://leafletjs.com/reference.html
 
 - start the server by
 > cd xdrive
 > nodemon bin/www
 
-- start the client by
-> cd xdriveClient
-> ember server
 
 # admin page
 - show all drivers, there status and location

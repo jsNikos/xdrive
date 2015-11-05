@@ -3,6 +3,9 @@
 var utils = require('../utils');
 var Session = require('../models/Session');
 
+/**
+* Observes the session-store for expired session. In case removes this and fire a destroy-event.
+**/
 class SessionService extends utils.EventEmitter {
 
   constructor() {
@@ -37,18 +40,10 @@ class SessionService extends utils.EventEmitter {
 	removeSession(sessionId){
 		return Session.remove({id: sessionId})
 				          .exec()
-									.then(() => {
+									.then(() => {                    
 												this.emit(this.destroy);
 									});
 	}
-
-
-
-  // touches the db for persisted session
-  // emits session destroy-events
-  // it seems session must be destroyed from db by hand
-  // scheduled task which is observing the session-store and call destroy on old ones
-
 
 }
 
