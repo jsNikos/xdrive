@@ -7,7 +7,7 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 - everything must run in mobile and desktop
 
 - client are split into different apps (driver, customer, admin)
-  but all hosted in publice
+  but all hosted in public
 
 - use this for the map http://leafletjs.com/reference.html
 
@@ -17,7 +17,7 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 
 
 # admin page
-- show all drivers, there status and location
+- show all drivers, their status and location
 
 # customer page
 - show to customer only 3 nearest available drivers
@@ -53,8 +53,8 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 - DrivesService: store coordinates
 
 Entities:
-Driver: id, facebook-id, position ({time, coord}), punchedIn (boolean), status [free, waiting, driving]
-Drive: id, driverId, starttime, endtime, coords: [{time, [coord]}], requestId (may be null if wasn't requested)
+Driver: id, facebook-id, position ({time, coord}), punchedIn (boolean), status [free, waiting, driving]      
+Drive: id, driverId, starttime, endtime, coords: [{time, [coord]}], requestId (may be null if wasn't requested), status
 
 CustomerRequest: id, forWhen (time), forWhere (coord), toWhere (coord)
 
