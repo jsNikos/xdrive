@@ -53,10 +53,10 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 - DrivesService: store coordinates
 
 Entities:
-Driver: id, facebook-id, position ({time, coord}), punchedIn (boolean), status [free, waiting, driving]      
-Drive: id, driverId, starttime, endtime, coords: [{time, [coord]}], requestId (may be null if wasn't requested), status
+Driver: id, facebook-id, position ({time, coord}), punchedIn (boolean), status (enum) [free, waiting, driving]      
+Drive: id, driverId, starttime, endtime, coords: [{time, [coord]}], requestId (may be null if wasn't requested)
 
-CustomerRequest: id, forWhen (time), forWhere (coord), toWhere (coord)
+CustomerRequest: id, driver, forWhen (time), forWhere (coord), toWhere (coord), status (enum) [open, taken, finished, canceled]
 
 Authentication:
 - sessions must be stored in monogodb, and cleaned up when expired

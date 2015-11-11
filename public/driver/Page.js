@@ -1,9 +1,9 @@
-define(['Vue', 'VueRouter'], function(Vue, VueRouter) {
+define(['Vue', 'VueRouter', 'PageRouter'], function(Vue, VueRouter, PageRouter) {
   return Page;
 
   function Page() {
     var scope = this;
-    var router = undefined; // vue-router
+    var pageRouter = undefined; // PageRouter
     var AppVue = undefined; // Vue-constructor
     var data = {
       authenticated: false,
@@ -15,8 +15,8 @@ define(['Vue', 'VueRouter'], function(Vue, VueRouter) {
     function init() {
       Vue.use(VueRouter);
       initAppVue();
-      initRouter();
-      router.start(AppVue, '#app');
+      pageRouter = new PageRouter();
+      pageRouter.start(AppVue, '#app');
     }
 
     function initAppVue() {
@@ -28,36 +28,8 @@ define(['Vue', 'VueRouter'], function(Vue, VueRouter) {
       });
     }
 
-    function initRouter() {
-      router = new VueRouter({});
-      router.map({
-        '/map': {
-          component: function(resolve, reject) {
-            require(['map/MapComponent'], function(MapComponent) {
-              resolve(new MapComponent());
-            });
-          }
-        },
-        '/login': {
-          component: function(resolve, reject) {
-            require(['login/LoginComponent'], function(LoginComponent) {
-              resolve(new LoginComponent());
-            });
-          }
-        },
-        '/schedule': {
-          component: function(resolve, reject) {
-            require(['schedule/ScheduleComponent'], function(ScheduleComponent) {
-              resolve(new ScheduleComponent());
-            });
-          }
-        }
-      });
-    }
-
     this.handlePunchIn = function() {
       //TODO
-      debugger;
     };
 
     init();
