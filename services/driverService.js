@@ -7,15 +7,16 @@ class DriverService {
   }
 
   add(driver){
-    var driverModel = new Driver(driver);
-    return driverModel.save();
+    return (new Driver(driver)).save();
   }
 
   find(props){
     return Driver.find(props);
   }
 
-
+  remove(driver){
+    return Driver.remove({name: driver.name});
+  }
 
 }
 

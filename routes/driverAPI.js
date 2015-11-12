@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 var services = require('../services');
-var services = require('../services');
 
 /* Posts routes */
 router.route('/add')
