@@ -1,0 +1,7 @@
+<div v-if="!showEditor">
+  <div>drivers</div>
+  <div class="driver" v-on:click="handleDriverSelected">driver</div>
+  <p>authenticated {{$parent.authenticated}}</p>
+  <div>show editor: {{showEditor}}</div>
+</div>
+<driver-editor v-if="showEditor" driver="selectedDriver"></driver-editor>

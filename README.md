@@ -15,6 +15,15 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 > cd xdrive
 > nodemon bin/www
 
+- debugging the server by
+https://github.com/node-inspector/node-inspector
+> cd xdrive
+> node-debug bin/www
+
+- test the server by
+> cd xdrive
+> mocha test
+
 
 # admin page
 - show all drivers, their status and location

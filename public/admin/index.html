@@ -31,29 +31,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Driver</a>
+        <a class="navbar-brand" href="#">Admin</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#" v-link="{path: '/map'}">Map</a></li>
-          <li><a href="#" v-link="{path: '/login'}">Login</a></li>
-          <li><a href="#schedule" v-link="{path: '/schedule'}">Schedule</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li>
+          <li><a href="#login" v-link="{path: '/login'}">Login</a></li>
+          <li><a href="#drivers" v-link="{path: '/drivers'}">Drivers</a></li>
         </ul>
-        <form class="navbar-form navbar-right" role="search">
-          <button type="button" class="btn btn-success" v-on:click="handlePunchIn">Punch In</button>
-        </form>
       </div>
       <!--/.nav-collapse -->
     </div>
@@ -67,7 +51,7 @@
   <script src="../bower_components/requirejs/require.js"></script>
   <script src="../main.js"></script>
   <script>
-    require(['Page', 'bootstrap', 'css!../common/navbar-fixed-top.css'], function(Page) {      
+    require(['Page', 'bootstrap', 'css!../common/navbar-fixed-top.css'], function(Page) {
       new Page();
     });
   </script>
