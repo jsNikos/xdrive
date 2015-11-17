@@ -1,4 +1,4 @@
-define(['text!drivers/drivers.html'], function(driversHtml) {
+define(['text!drivers/drivers.html', 'resourceService'], function(driversHtml, resourceService) {
   return DriversComponent;
 
   function DriversComponent() {
@@ -6,9 +6,15 @@ define(['text!drivers/drivers.html'], function(driversHtml) {
 
     this.route = {
       data: function() {
-        //TODO return a promise via return dataService.get ...
-        debugger;
-        return;
+        var vueComp = this;
+        resourceService
+          .fetch({url: '/api/driver/findAllDrivers', method: 'GET'})
+          .then(function(drivers){
+            vueComp.$set('drivers', drivers);
+          })
+          .catch(function(e){
+            console.error(e);
+          });
       }
     };
 
