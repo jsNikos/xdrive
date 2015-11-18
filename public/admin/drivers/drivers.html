@@ -3,5 +3,12 @@
   <div class="driver" v-on:click="handleDriverSelected">driver</div>
   <p>authenticated {{$parent.authenticated}}</p>
   <div>show editor: {{showEditor}}</div>
+
+  <button type="button" class="btn btn-primary" v-on:click="handleCreateNew">Create New</button>
+  <div class="list-group">
+    <button type="button" class="list-group-item" v-for="driver in drivers">
+      {{driver.name}}
+    </button>
+  </div>
 </div>
-<driver-editor v-if="showEditor" driver="selectedDriver"></driver-editor>
+<driver-editor v-show="showEditor" v-bind:driver="selectedDriver" v-bind:isEditing="isEditing"></driver-editor>

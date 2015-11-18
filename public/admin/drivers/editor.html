@@ -1,2 +1,28 @@
-<div>create delete or edit a driver</div>
-<p>{{driver}}</p>
+<p v-if="isEditing">Edit Driver {{driver.name}}</p>
+<p v-else>Create a new Driver</p>
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" v-model="driver.name" placeholder="A unique name">
+  </div>
+  <div class="form-group">
+    <label for="firstname">Firstname</label>
+    <input type="text" class="form-control" id="firstname" v-model="driver.firstname" placeholder="Firstname">
+  </div>
+  <div class="form-group">
+    <label for="lastname">Lastname</label>
+    <input type="text" class="form-control" id="lastname" v-model="driver.lastname" placeholder="Lastname">
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" v-model="driver.email"  placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="tel" class="form-control" id="phone" v-model="driver.phone" placeholder="Phone">
+  </div>
+
+  <button type="button" class="btn btn-success" v-on:click="handleSubmit(driver)">Submit</button>
+  <button type="button" class="btn btn-info" v-on:click="handleCancel">Cancel</button>
+  <button type="button" class="btn btn-danger" v-if="isEditing" v-on:click="handleRemove(driver)">Remove</button>
+</form>

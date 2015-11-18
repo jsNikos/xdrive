@@ -7,6 +7,19 @@ module.exports = mongoose.model('Driver', new Schema({
     required: true,
     unique: true
   },
+  firstname: {
+    type: String
+  },
+  lastname: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  phone:{
+    type: Number,
+    required: true
+  },
   position: {
     latitude: Number,
     longitude: Number,
