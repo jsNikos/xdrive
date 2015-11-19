@@ -32,13 +32,13 @@ define(['text!drivers/drivers.html', 'resourceService'], function(driversHtml, r
 
     this.events = {
       'cancel-edit': handleCancelEdit,
-      'submit-edit': handleSubmitEdit,
+      'added-driver': handleAddedDriver,
       'remove': handleRemove
     };
 
-    function handleSubmitEdit(driver) {
+    function handleAddedDriver(driver) {
       this.$set('showEditor', false);
-      //TODO submit to server
+      this.$data.drivers.push(driver);
     }
 
     function handleRemove(driver){

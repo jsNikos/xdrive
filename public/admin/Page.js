@@ -1,5 +1,5 @@
-define(['Vue', 'VueRouter', 'PageRouter', 'VueResource', 'VueValidator'],
-function(Vue, VueRouter, PageRouter, VueResource, VueValidator) {
+define(['Vue', 'VueRouter', 'PageRouter', 'VueResource'],
+function(Vue, VueRouter, PageRouter, VueResource) {
   return Page;
 
   function Page() {
@@ -13,8 +13,7 @@ function(Vue, VueRouter, PageRouter, VueResource, VueValidator) {
 
     function init() {
       Vue.use(VueRouter);
-      Vue.use(VueResource);
-      Vue.use(VueValidator);
+      Vue.use(VueResource);      
       initAppVue();
       pageRouter = new PageRouter();
       pageRouter.start(AppVue, '#app');

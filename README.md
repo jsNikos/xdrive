@@ -11,6 +11,10 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 
 - use this for the map http://leafletjs.com/reference.html
 
+- vue-router is used for routing, vue-resource to fetch from server
+  vue-validator cannot be used because not available for this version
+  instead server-side validations are implemented on services
+
 - start the server by
 > cd xdrive
 > nodemon bin/www

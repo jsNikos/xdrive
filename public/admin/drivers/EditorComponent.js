@@ -1,4 +1,4 @@
-define(['text!drivers/editor.html'], function(editorHtml) {
+define(['text!drivers/editor.html', 'resourceService'], function(editorHtml, resourceService) {
   return EditorComponent;
 
   function EditorComponent() {
@@ -12,11 +12,22 @@ define(['text!drivers/editor.html'], function(editorHtml) {
       this.$dispatch('cancel-edit');
     };
 
-    this.handleSubmit = function(driver){
-      this.$dispatch('submit-edit', driver);
+    this.handleSubmit = function(driver) {
+      var vueScope = this;
+      resourceService.fetch({
+          url: '/api/driver/addDriver',
+          method: 'POST',
+          data: {driver: driver}
+        })
+        .then(function(){
+          debugger; // handle validation errors
+          // if none then
+          vueScope.$dispatch('added-driver', driver);
+        })
+        .catch(console.log);
     }
 
-    this.handleRemove = function(driver){
+    this.handleRemove = function(driver) {
       this.$dispatch('remove', driver);
     }
   }

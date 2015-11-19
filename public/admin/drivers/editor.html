@@ -3,23 +3,28 @@
 <form>
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" v-model="driver.name" placeholder="A unique name">
+    <input type="text" class="form-control" id="name" v-model="driver.name"
+      placeholder="A unique name">
   </div>
   <div class="form-group">
     <label for="firstname">Firstname</label>
-    <input type="text" class="form-control" id="firstname" v-model="driver.firstname" placeholder="Firstname">
+    <input type="text" class="form-control" id="firstname"
+     v-model="driver.firstname" placeholder="Firstname">
   </div>
   <div class="form-group">
     <label for="lastname">Lastname</label>
-    <input type="text" class="form-control" id="lastname" v-model="driver.lastname" placeholder="Lastname">
+    <input type="text" class="form-control" id="lastname"
+     v-model="driver.lastname" placeholder="Lastname">
   </div>
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" v-model="driver.email"  placeholder="Email">
+    <input type="email" class="form-control" id="email"
+     v-model="driver.email" placeholder="Email">
   </div>
   <div class="form-group">
     <label for="phone">Phone</label>
-    <input type="tel" class="form-control" id="phone" v-model="driver.phone" placeholder="Phone">
+    <input type="tel" class="form-control" id="phone"
+     v-model="driver.phone" placeholder="Phone">
   </div>
 
   <button type="button" class="btn btn-success" v-on:click="handleSubmit(driver)">Submit</button>

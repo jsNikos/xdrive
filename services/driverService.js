@@ -7,6 +7,8 @@ class DriverService {
   }
 
   add(driver){
+    //TODO validation in case errors reject with valiadation-object
+    // {name: {required: true, unique: true}, ...}
     return (new Driver(driver)).save();
   }
 
