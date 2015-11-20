@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('Driver', new Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: 'A name is needed',
+    unique: 'This name is already used by another driver'
   },
   firstname: {
     type: String
@@ -14,11 +14,12 @@ module.exports = mongoose.model('Driver', new Schema({
     type: String
   },
   email: {
-    type: String
+    type: String,
+    required: 'A email address is needed'
   },
   phone:{
-    type: Number,
-    required: true
+    type: String,
+    required: 'A phone number is needed'
   },
   position: {
     latitude: Number,

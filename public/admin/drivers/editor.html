@@ -1,10 +1,11 @@
 <p v-if="isEditing">Edit Driver {{driver.name}}</p>
 <p v-else>Create a new Driver</p>
 <form>
-  <div class="form-group">
+  <div class="form-group" v-bind:class="{'has-error': errors.name}">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" v-model="driver.name"
       placeholder="A unique name">
+      <span v-if="errors.name" class="help-block">{{errors.name.message}}</span>
   </div>
   <div class="form-group">
     <label for="firstname">Firstname</label>
@@ -16,15 +17,17 @@
     <input type="text" class="form-control" id="lastname"
      v-model="driver.lastname" placeholder="Lastname">
   </div>
-  <div class="form-group">
+  <div class="form-group" v-bind:class="{'has-error': errors.email}">
     <label for="email">Email</label>
     <input type="email" class="form-control" id="email"
      v-model="driver.email" placeholder="Email">
+     <span v-if="errors.email" class="help-block">{{errors.email.message}}</span>
   </div>
-  <div class="form-group">
+  <div class="form-group" v-bind:class="{'has-error': errors.phone}">
     <label for="phone">Phone</label>
     <input type="tel" class="form-control" id="phone"
      v-model="driver.phone" placeholder="Phone">
+     <span v-if="errors.phone" class="help-block">{{errors.phone.message}}</span>
   </div>
 
   <button type="button" class="btn btn-success" v-on:click="handleSubmit(driver)">Submit</button>

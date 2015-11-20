@@ -1,23 +1,45 @@
 "use strict";
 var Driver = require('../models/Driver');
+var validationUtil = require('../utils').validationUtil;
+var _ = require('underscore');
 
 class DriverService {
 
-  constructor() {
+  constructor() {}
+
+  add(driver) {
+    return this.customValidateDriver(driver)
+      .then(() => {
+        return (new Driver(driver))
+          .save()
+          .then(null, validationUtil.createValidationResponse);
+      }, validationUtil.createValidationResponse);
   }
 
-  add(driver){
-    //TODO validation in case errors reject with valiadation-object
-    // {name: {required: true, unique: true}, ...}
-    return (new Driver(driver)).save();
+  customValidateDriver(driver) {
+    return new Promise((resolve, reject) => {
+      if (driver.phone && !/^[0-9]+$/.test(driver.phone)) {
+        reject({
+          errors: {
+            phone: {
+              message: 'Must be a number'
+            }
+          }
+        });
+      } else {
+        resolve();
+      }
+    });
   }
 
-  find(props){
+  find(props) {
     return Driver.find(props);
   }
 
-  remove(driver){
-    return Driver.remove({name: driver.name});
+  remove(driver) {
+    return Driver.remove({
+      name: driver.name
+    });
   }
 
 }

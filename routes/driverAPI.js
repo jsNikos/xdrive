@@ -9,10 +9,10 @@ router.route('/addDriver')
   .post((req, res) => {
     services.driverService
       .add(req.body.driver)
-      .then(() => {
-        res.end();
+      .then((err) => {
+        res.json(err || {});
       })
-      .catch((e) => {
+      .catch((e) => {        
         throw new Error(e);
       });
   });

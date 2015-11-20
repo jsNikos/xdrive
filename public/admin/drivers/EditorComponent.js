@@ -19,10 +19,12 @@ define(['text!drivers/editor.html', 'resourceService'], function(editorHtml, res
           method: 'POST',
           data: {driver: driver}
         })
-        .then(function(){
-          debugger; // handle validation errors
-          // if none then
-          vueScope.$dispatch('added-driver', driver);
+        .then(function(resp){
+          if(resp.errors){
+              vueScope.$set('errors', resp.errors);
+          } else{
+              vueScope.$dispatch('added-driver', driver);
+          }
         })
         .catch(console.log);
     }

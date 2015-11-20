@@ -1,3 +1,4 @@
 module.exports = {
-  EventEmitter: require('./EventEmitter')
+  EventEmitter: require('./EventEmitter'),
+  validationUtil: require('./validationUtil')
 };
