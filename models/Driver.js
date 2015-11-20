@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Driver', new Schema({
   name: {
     type: String,
     required: 'A name is needed',
-    unique: 'This name is already used by another driver'
+    unique: true,
+    uniqueCaseInsensitive: true
   },
   firstname: {
     type: String
@@ -19,7 +21,8 @@ module.exports = mongoose.model('Driver', new Schema({
   },
   phone:{
     type: String,
-    required: 'A phone number is needed'
+    required: 'A phone number is needed',
+    match: [/^[0-9]+$/, 'Must be a number']
   },
   position: {
     latitude: Number,
@@ -37,4 +40,4 @@ module.exports = mongoose.model('Driver', new Schema({
     enum: ['free', 'waiting', 'driving'],
     required: true
   }
-}));
+}).plugin(uniqueValidator, { message: 'Another user already uses this value' }));

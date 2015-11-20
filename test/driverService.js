@@ -7,7 +7,7 @@ describe('DriverService', function() {
   describe('#add()', function () {
     it('should add a driver', function (done) {
       driverService
-            .add({name: 'test-driver-name', phone: 2342422})
+            .add({name: 'test-driver-name', phone: '2342422', email: 'dssdf'})
             .then((driver) => {
                   driverService
                         .find({name: 'test-driver-name'})
@@ -50,7 +50,7 @@ describe('DriverService', function() {
   describe('enum validation', function(){
     it('should throw validation exception', function(done){
       driverService
-          .add({name: 'test-driver-name', status: 'unvalid status xxx'})
+          .add({name: 'test-driver-name', status: 'unvalid status xxx', email: 'dssdf'})
           .then(() => {
             assert.equal(true, false, 'a validation exception is expected here');
             done();
@@ -62,10 +62,10 @@ describe('DriverService', function() {
   describe('unique name validation', function(){
     it('should throw validation exception', function(done){
       driverService
-          .add({name: 'test-driver-name', phone: 56454})
+          .add({name: 'test-driver-name', phone: '56454', email: 'dssdf'})
           .then(() => {
             driverService
-                .add({name: 'test-driver-name', phone: 65465465})
+                .add({name: 'Test-Driver-name', phone: '65465465', email: 'dssdf'})
                 .then(() => { assert.equal(true, false, 'a validation exception is expected here'); })
                 .catch(() => cleanUp());
           })
