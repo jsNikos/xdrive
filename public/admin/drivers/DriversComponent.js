@@ -1,4 +1,5 @@
-define(['text!drivers/drivers.html', 'resourceService'], function(driversHtml, resourceService) {
+define(['text!drivers/drivers.html', 'resourceService', 'underscore'],
+function(driversHtml, resourceService, _) {
   return DriversComponent;
 
   function DriversComponent() {
@@ -33,8 +34,16 @@ define(['text!drivers/drivers.html', 'resourceService'], function(driversHtml, r
     this.events = {
       'cancel-edit': handleCancelEdit,
       'added-driver': handleAddedDriver,
-      'remove': handleRemove
+      'remove': handleRemove,
+      'updated-driver': handleUpdateDriver
     };
+
+    function handleUpdateDriver(driver){
+      this.$set('showEditor', false);
+      _.chain(this.$get('drivers'))
+          .findWhere({_id: driver._id})
+          .extend(driver);
+    }
 
     function handleAddedDriver(driver) {
       this.$set('showEditor', false);
@@ -61,7 +70,7 @@ define(['text!drivers/drivers.html', 'resourceService'], function(driversHtml, r
     }
 
     this.handleDriverSelected = function(driver) {
-      //TODO
+      this.$set('selectedDriver', JSON.parse(JSON.stringify(driver)));
       this.$set('isEditing', true);
       this.$data.showEditor = true;
     };

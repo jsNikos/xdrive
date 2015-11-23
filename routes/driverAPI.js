@@ -4,7 +4,6 @@ var router = express.Router();
 var services = require('../services');
 var Driver = require('../models/Driver');
 
-/* Posts routes */
 router.route('/addDriver')
   .post((req, res) => {
     services.driverService
@@ -12,15 +11,28 @@ router.route('/addDriver')
       .then((err) => {
         res.json(err || {});
       })
-      .catch((e) => {        
+      .catch((e) => {
         throw new Error(e);
       });
   });
+
+  router.route('/updateDriver')
+    .post((req, res) => {
+      services.driverService
+        .update(req.body.driver)
+        .then((resp) => {
+          res.json(resp);
+        })
+        .catch((e) => {
+          throw new Error(e);
+        });
+    });
 
 router.route('/findAllDrivers')
   .get((req, res) => {
     Driver
       .find(undefined, {
+        id: 1,
         name: 1,
         position: 1,
         punchedIn: 1,

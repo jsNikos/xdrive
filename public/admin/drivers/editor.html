@@ -30,7 +30,8 @@
      <span v-if="errors.phone" class="help-block">{{errors.phone.message}}</span>
   </div>
 
-  <button type="button" class="btn btn-success" v-on:click="handleSubmit(driver)">Submit</button>
+  <button type="button" class="btn btn-success" v-if="!isEditing" v-on:click="handleCreate(driver)">Submit</button>
+  <button type="button" class="btn btn-success" v-if="isEditing" v-on:click="handleUpdate(driver)">Submit</button>
   <button type="button" class="btn btn-info" v-on:click="handleCancel">Cancel</button>
   <button type="button" class="btn btn-danger" v-if="isEditing" v-on:click="handleRemove(driver)">Remove</button>
 </form>

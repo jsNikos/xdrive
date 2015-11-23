@@ -1,14 +1,14 @@
 <div v-if="!showEditor">
   <div>drivers</div>
   <div class="driver" v-on:click="handleDriverSelected">driver</div>
-  <p>authenticated {{$parent.authenticated}}</p>
-  <div>show editor: {{showEditor}}</div>
+  <p>authenticated {{$parent.authenticated}}</p>  
 
   <button type="button" class="btn btn-primary" v-on:click="handleCreateNew">Create New</button>
   <div class="list-group">
-    <button type="button" class="list-group-item" v-for="driver in drivers">
+    <button type="button" class="list-group-item"
+      v-for="driver in drivers" v-on:click="handleDriverSelected(driver)">
       {{driver.name}}
     </button>
   </div>
 </div>
-<driver-editor v-show="showEditor" v-bind:driver="selectedDriver" v-bind:isEditing="isEditing"></driver-editor>
+<driver-editor v-if="showEditor" v-bind:driver="selectedDriver" v-bind:is-editing="isEditing"></driver-editor>
