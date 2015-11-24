@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
+var uniqueValidator = require('mongoose-beautiful-unique-validation');
 var Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Driver', new Schema({
   name: {
     type: String,
     required: 'A name is needed',
-    unique: true,
+    unique: 'Another user already uses this value',
     uniqueCaseInsensitive: true
   },
   firstname: {
@@ -40,4 +40,4 @@ module.exports = mongoose.model('Driver', new Schema({
     enum: ['free', 'waiting', 'driving'],
     required: true
   }
-}).plugin(uniqueValidator, { message: 'Another user already uses this value' }));
+}).plugin(uniqueValidator));

@@ -9,8 +9,12 @@ class DriverService {
 
   add(driver) {
     return (new Driver(driver))
-      .save()
-      .then((savedDriver) => savedDriver.id, validationUtil.createValidationResponse);
+      .trySave()
+      .then((savedDriver) => {
+        return {
+          _id: savedDriver.id
+        };
+      }, validationUtil.createValidationResponse);
   }
 
   find(props) {
@@ -24,27 +28,16 @@ class DriverService {
   }
 
   update(driver) {
-    return Driver.findOneAndUpdate({
-        _id: driver._id
-      }, driver, {
-        runValidators: true,
-        context: 'query'
+    return Driver
+      .findById(driver._id)
+      .then((driverModel) => {
+        _.extend(driverModel, driver);
+        return driverModel.trySave();
       })
-      .then((driver) => driver, (err) => err);
-
-    // return Driver.findById(driver._id)
-    //   .then((driverModel) => {
-    //     _.extend(driverModel, driver);
-    //     return driverModel.save({runValidators: true, context: 'query' })
-    //       .then((driver) => {
-    //         return driver;
-    //       }, validationUtil.createValidationResponse);
-    //   });
-
-    // return Driver.findByIdAndUpdate(driver.id, driver, {new: true});
-    // validationUtil.createValidationResponse);
+      .then(() => driver, validationUtil.createValidationResponse);
   }
-
 }
+
+
 
 module.exports = new DriverService();

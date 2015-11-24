@@ -8,25 +8,25 @@ router.route('/addDriver')
   .post((req, res) => {
     services.driverService
       .add(req.body.driver)
-      .then((err) => {
-        res.json(err || {});
+      .then((result) => {
+        res.json(result || {});
       })
       .catch((e) => {
         throw new Error(e);
       });
   });
 
-  router.route('/updateDriver')
-    .post((req, res) => {
-      services.driverService
-        .update(req.body.driver)
-        .then((resp) => {
-          res.json(resp);
-        })
-        .catch((e) => {
-          throw new Error(e);
-        });
-    });
+router.route('/updateDriver')
+  .post((req, res) => {
+    services.driverService
+      .update(req.body.driver)
+      .then((resp) => {
+        res.json(resp);
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });
+  });
 
 router.route('/findAllDrivers')
   .get((req, res) => {

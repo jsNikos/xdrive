@@ -31,7 +31,7 @@ define(['text!drivers/editor.html', 'resourceService', 'jquery'], function(edito
             vueScope.$set('errors', resp.errors);
           } else {
             removeContent(vueScope.$el);
-            vueScope.$dispatch('added-driver', driver);
+            vueScope.$dispatch('added-driver', _.extend(driver, resp));
           }
         })
         .catch(console.log);

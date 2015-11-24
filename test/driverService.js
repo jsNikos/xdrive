@@ -13,10 +13,10 @@ describe('DriverService', function() {
           email: 'dssdf'
         })
         .then((err) => {
-          if (err) {
+          if (err.errors) {
             console.log(err);
           }
-          driverService
+          return driverService
             .find({
               name: 'test-driver-name'
             })
@@ -24,8 +24,7 @@ describe('DriverService', function() {
               var hasAtLeastOne = drivers.length > 0;
               assert.equal(hasAtLeastOne, true, 'one driver is expected in db with name, test-driver-name');
               done();
-            })
-            .catch(done);
+            });
         })
         .catch(done);
     });
@@ -50,7 +49,7 @@ describe('DriverService', function() {
           name: 'test-driver-name'
         })
         .then(() => {
-          driverService
+          return driverService
             .find({
               name: 'test-driver-name'
             })
@@ -71,13 +70,21 @@ describe('DriverService', function() {
           status: 'unvalid status xxx',
           email: 'dssdf'
         })
-        .then(() => {
-          assert.equal(true, false, 'a validation exception is expected here');
-          done();
+        .then((result) => {
+          assert.equal(result._id == undefined, true, 'a validation exception is expected here');
+          cleanUp();
         })
-        .catch(() => {
-          done();
-        });
+        .catch(cleanUp);
+
+      function cleanUp(err) {
+        driverService
+          .remove({
+            name: 'test-driver-name'
+          })
+          .then(() => {
+            done(err);
+          });
+      }
     });
   });
 
@@ -90,86 +97,73 @@ describe('DriverService', function() {
           email: 'dssdf'
         })
         .then(() => {
-          driverService
+          return driverService
             .add({
-              name: 'Test-Driver-name',
+              name: 'test-driver-name',
               phone: '65465465',
               email: 'dssdf'
             })
-            .then(() => {
-              assert.equal(true, false, 'a validation exception is expected here');
-            })
-            .catch(() => cleanUp());
-        })
-        .catch(cleanUp);
-
-      function cleanUp(err) {
-        Promise.all([
-            driverService.remove({
-              name: 'test-driver-name'
-            }),
-            driverService.remove({
-              name: 'Test-Driver-name'
-            })
-          ])
-          .then(() => {
-            done(err);
-          });
-      }
-    });
-  });
-
-  describe('#update unique name validation', function() {
-    it('should throw validation exception', function(done) {
-      Promise.all([
-          driverService.add({
-            name: 'test-driver-name1',
-            phone: '56454',
-            email: 'dssdf'
-          }),
-          driverService.add({
-            name: 'test-driver-name2',
-            phone: '56454',
-            email: 'dssdf'
-          })
-        ])
-        .then((driverIds) => {
-          driverService
-            .update({
-              _id: driverIds[1],
-              name: 'test-driver-name1'
-            })
             .then((err) => {
-              console.log(err);
-            })
-            .then(cleanUp)
+              assert.equal(err.errors && err.errors.name && (err.errors.name.kind === 'Duplicate value'),
+                true, 'a validation exception is expected here');
+              cleanUp();
+            });
         })
         .catch(cleanUp);
 
-      // driverService
-      //     .add({name: 'test-driver-name1', phone: '56454', email: 'dssdf'})
-      //     .then(() => {
-      //       driverService
-      //           .add({name: 'Test-Driver-name', phone: '65465465', email: 'dssdf'})
-      //           .then(() => { assert.equal(true, false, 'a validation exception is expected here'); })
-      //           .catch(() => cleanUp());
-      //     })
-      //     .catch(cleanUp);
-
-
       function cleanUp(err) {
-        Promise.all([
-            driverService.remove({
-              name: 'test-driver-name1'
-            }),
-            driverService.remove({
-              name: 'test-driver-name2'
-            })
-          ])
+        console.log('clean up running');
+        driverService
+          .remove({
+            name: 'test-driver-name'
+          })
           .then(() => {
             done(err);
           });
       }
     });
   });
+
+  // describe('#update unique name validation', function() {
+  //   it('should throw validation exception', function(done) {
+  //     Promise.all([
+  //         driverService.add({
+  //           name: 'test-driver-name1',
+  //           phone: '56454',
+  //           email: 'dssdf'
+  //         }),
+  //         driverService.add({
+  //           name: 'test-driver-name2',
+  //           phone: '56454',
+  //           email: 'dssdf'
+  //         })
+  //       ])
+  //       .then((drivers) => {
+  //         return driverService
+  //           .update({
+  //             _id: drivers[1]._id,
+  //             name: 'test-driver-name1'
+  //           })
+  //           .then((err) => {
+  //             assert.equal(err.errors.name.kind === 'Duplicate value', true, 'a validation exception is expected here');
+  //           })
+  //           .then(cleanUp)
+  //       })
+  //       .catch(cleanUp);
+  //
+  //     function cleanUp(err) {
+  //       Promise.all([
+  //           driverService.remove({
+  //             name: 'test-driver-name1'
+  //           }),
+  //           driverService.remove({
+  //             name: 'test-driver-name2'
+  //           })
+  //         ])
+  //         .then(() => {
+  //           done(err);
+  //         });
+  //     }
+  //   });
+  // });
 });
