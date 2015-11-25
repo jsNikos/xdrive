@@ -23,7 +23,7 @@ class DriverService {
 
   remove(driver) {
     return Driver.remove({
-      name: driver.name
+      _id: driver._id
     });
   }
 

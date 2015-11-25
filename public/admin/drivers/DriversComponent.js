@@ -1,5 +1,5 @@
-define(['text!drivers/drivers.html', 'resourceService', 'underscore'],
-function(driversHtml, resourceService, _) {
+define(['text!drivers/drivers.html', 'resourceService', 'underscore', 'ArrayUtils'],
+function(driversHtml, resourceService, _, ArrayUtils) {
   return DriversComponent;
 
   function DriversComponent() {
@@ -31,34 +31,6 @@ function(driversHtml, resourceService, _) {
       };
     };
 
-    this.events = {
-      'cancel-edit': handleCancelEdit,
-      'added-driver': handleAddedDriver,
-      'remove': handleRemove,
-      'updated-driver': handleUpdateDriver
-    };
-
-    function handleUpdateDriver(driver){
-      this.$set('showEditor', false);
-      _.chain(this.$get('drivers'))
-          .findWhere({_id: driver._id})
-          .extend(driver);
-    }
-
-    function handleAddedDriver(driver) {
-      this.$set('showEditor', false);
-      this.$data.drivers.push(driver);
-    }
-
-    function handleRemove(driver){
-      //TODO
-    }
-
-    function handleCancelEdit() {
-      this.$set('showEditor', false);
-      this.$set('selectedDriver', undefined);
-    };
-
     this.methods = this;
 
     this.components = {
@@ -68,6 +40,37 @@ function(driversHtml, resourceService, _) {
         });
       }
     }
+
+    this.events = {
+      'cancel-edit': handleCancelEdit,
+      'added-driver': handleAddedDriver,
+      'removed-driver': handleRemovedDriver,
+      'updated-driver': handleUpdatedDriver
+    };
+
+    function handleUpdatedDriver(driver){
+      this.$set('showEditor', false);
+      _.chain(this.$get('drivers'))
+          .findWhere({_id: driver._id})
+          .extend(driver);
+    }
+
+    function handleAddedDriver(driver) {
+      this.$set('showEditor', false);
+      this.$data.drivers.push(driver);
+      this.$set('selectedDriver', undefined);
+    }
+
+    function handleRemovedDriver(driver){
+      this.$set('showEditor', false);
+      ArrayUtils(this.$data.drivers).removeByProps({_id: driver._id});
+      this.$set('selectedDriver', undefined);
+    }
+
+    function handleCancelEdit() {
+      this.$set('showEditor', false);
+      this.$set('selectedDriver', undefined);
+    };
 
     this.handleDriverSelected = function(driver) {
       this.$set('selectedDriver', JSON.parse(JSON.stringify(driver)));

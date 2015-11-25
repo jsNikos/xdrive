@@ -10,7 +10,8 @@ requirejs.config({
         q: '../bower_components/q/q',
         underscore: '../bower_components/underscore/underscore-min',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
-        resourceService: '../common/resourceService'
+        resourceService: '../common/resourceService',
+        ArrayUtils: '../common/ArrayUtils'
     },
     shim: {
       bootstrap:{

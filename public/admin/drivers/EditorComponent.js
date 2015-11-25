@@ -58,11 +58,22 @@ define(['text!drivers/editor.html', 'resourceService', 'jquery'], function(edito
     };
 
     this.handleRemove = function(driver) {
-      removeContent(this.$el);
-      this.$dispatch('remove', driver);
-    }
+      var vueScope = this;
+      resourceService.fetch({
+          url: '/api/driver/removeDriver',
+          method: 'POST',
+          data: {
+            driver: driver
+          }
+        })
+        .then(function() {
+          removeContent(vueScope.$el);
+          vueScope.$dispatch('removed-driver', driver);
+        })
+        .catch(console.log);
+    };
 
-    function removeContent(el){
+    function removeContent(el) {
       jquery(el).empty();
     }
   }

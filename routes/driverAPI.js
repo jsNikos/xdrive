@@ -16,6 +16,18 @@ router.route('/addDriver')
       });
   });
 
+router.route('/removeDriver')
+  .post((req, res) => {
+    services.driverService
+      .remove(req.body.driver)
+      .then((result) => {
+        res.json(result || {});
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });
+  });
+
 router.route('/updateDriver')
   .post((req, res) => {
     services.driverService
