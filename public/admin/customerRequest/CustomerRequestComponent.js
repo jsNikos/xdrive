@@ -1,4 +1,4 @@
-define(['text!customerRequest/customerRequest.html', 'resourceService', 'DateTimePickerComponent'],
+define(['text!customerRequest/customerRequest.html', 'resourceService', 'VueDateTimePicker'],
 function(customerRequestHtml, resourceService, DateTimePickerComponent) {
   return CustomerRequestComponent;
 
@@ -8,14 +8,9 @@ function(customerRequestHtml, resourceService, DateTimePickerComponent) {
     this.data = function() {
       return {
         freeDrivers: [],
-        customerRequest: undefined
+        customerRequest: {forWhen: new Date()}
       };
     };
-
-    this.ready = function(){
-      console.log('hereeerrer');
-      jquery('#forWhen').datetimepicker();
-    }
 
     this.methods = this;
 

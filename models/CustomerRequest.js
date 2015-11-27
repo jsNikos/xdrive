@@ -16,8 +16,11 @@ module.exports = mongoose.model('CustomerRequest', new Schema({
     required: true
   },
   toWhere: {
-    latitude: Number,
-    longitude: Number
+    type: {
+      latitude: Number,
+      longitude: Number
+    },
+    required: true
   },
   status: {
     type: String,
