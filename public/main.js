@@ -11,7 +11,11 @@ requirejs.config({
         underscore: '../bower_components/underscore/underscore-min',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
         resourceService: '../common/resourceService',
-        ArrayUtils: '../common/ArrayUtils'
+        ArrayUtils: '../common/ArrayUtils',
+        datetimepicker: '../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
+        datetimepickerCSS: '../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min',
+        moment: '../bower_components/moment/min/moment.min',
+        DateTimePickerComponent: '../common/DateTimePickerComponent'
     },
     shim: {
       bootstrap:{

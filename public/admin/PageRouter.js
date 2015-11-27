@@ -19,7 +19,14 @@ define(['Vue', 'VueRouter'], function(Vue, VueRouter) {
               resolve(new LoginComponent());
             });
           }
-        }
+        },
+        '/customerRequest': {
+          component: function(resolve, reject) {
+            require(['customerRequest/CustomerRequestComponent'], function(CustomerRequestComponent) {
+              resolve(new CustomerRequestComponent());
+            });
+          }
+        },
       });
     }
 

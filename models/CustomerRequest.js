@@ -8,7 +8,7 @@ module.exports = mongoose.model('CustomerRequest', new Schema({
     type: Date,
     required: true
   },
-  forWhere: {
+  fromWhere: {
     type: {
       latitude: Number,
       longitude: Number
