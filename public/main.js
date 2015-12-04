@@ -15,11 +15,21 @@ requirejs.config({
         datetimepicker: '../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
         datetimepickerCSS: '../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min',
         moment: '../bower_components/moment/min/moment.min',
-        VueDateTimePicker: '../common/VueDateTimePicker'
+        VueDateTimePicker: '../common/VueDateTimePicker',
+        'esri-leaflet-geocoder': '../bower_components/esri-leaflet-geocoder/dist/esri-leaflet-geocoder',
+        'esri-leaflet': '../bower_components/esri-leaflet/dist/esri-leaflet',
+        'leaflet': '../bower_components/leaflet/dist/leaflet',
+        'selectivity': '../bower_components/Selectivity.js/dist/selectivity-full.min',
+        'selectivityCSS': '../bower_components/Selectivity.js/dist/selectivity-full.min',
+        VueGeocodeSuggest: '../common/VueGeocodeSuggest',
+        fontAwsome: '../bower_components/font-awesome/css/font-awesome.min'
     },
     shim: {
       bootstrap:{
         deps: ['jquery', 'css!../bower_components/bootstrap/dist/css/bootstrap.min.css']
+      },
+      selectivity:{
+        deps:['jquery', 'css!selectivityCSS', 'bootstrap', 'css!fontAwsome']
       }
     },
     map: {
