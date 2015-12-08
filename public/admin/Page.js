@@ -1,4 +1,4 @@
-define(['Vue', 'VueRouter', 'PageRouter', 'VueResource'],
+define(['Vue', 'VueRouter', './PageRouter', 'VueResource'],
 function(Vue, VueRouter, PageRouter, VueResource) {
   return Page;
 
@@ -13,7 +13,7 @@ function(Vue, VueRouter, PageRouter, VueResource) {
 
     function init() {
       Vue.use(VueRouter);
-      Vue.use(VueResource);      
+      Vue.use(VueResource);
       initAppVue();
       pageRouter = new PageRouter();
       pageRouter.start(AppVue, '#app');

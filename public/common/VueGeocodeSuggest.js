@@ -1,5 +1,5 @@
-define(['Vue', 'esri-leaflet-geocoder', 'jquery', 'underscore', 'selectivity'],
-  function(Vue, Geocoding, jquery, _) {
+define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
+  function(Vue, geoService, jquery, _) {
     return Vue.component('geocode-suggest', {
       replace: false,
 
@@ -12,7 +12,7 @@ define(['Vue', 'esri-leaflet-geocoder', 'jquery', 'underscore', 'selectivity'],
       props: ['model', 'placeholder'],
 
       ready: function() {
-        // var vueScope = this;
+        var vueScope = this;
         // var $datepicker = jquery(this.$el).find('.input-group.date');
         // $datepicker.datetimepicker();
         // $datepicker.data('DateTimePicker').date(this.$data.model);
@@ -25,35 +25,44 @@ define(['Vue', 'esri-leaflet-geocoder', 'jquery', 'underscore', 'selectivity'],
         // });
         // var geocodeService = Geocoding.geocodeServiceProvider({useMapBounds: false});
 
-        // var $geocodeSuggest = jquery(this.$el).find('.input-group');
-        // $geocodeSuggest.selectivity({
-        //   placeholder: this.$data.placeholder,
-        //   query: function(search) {
-        //     Geocoding.geocode().text(search.term).run(function(err, geo, response) {
-        //       var mapped = _.chain(geo.results).map(function(result) {
-        //         return {
-        //           text: result.text,
-        //           id: result.text,
-        //           latitude: result.latlng.lat,
-        //           longitude: result.latlng.lng
-        //         };
-        //       }).value();
-        //       search.callback({
-        //         results: mapped
-        //       });
-        //     });
-        //   }
+        var $geocodeSuggest = jquery(this.$el).find('.input-group');
+        $geocodeSuggest.selectivity({
+          placeholder: this.$data.placeholder,
+          query: function(search) {
+            geoService.suggest(search.term)
+              .then(function(response) {
+                var mapped = _.chain(response.result).map(function(result) {
+                  return {
+                    text: _.chain(result).pluck(['city', 'countryCode', 'name']).value().join(', '),
+                    id: result.id,
+                    latitude: result.lat,
+                    longitude: result.lng
+                  };
+                }).value();
+                search.callback({
+                  results: mapped
+                });
+              })
+              .catch(console.log);
+          }
+        });
+
+        // require(['../admin/Page'], function(Page) {
+        //   new Page();
+        //
+        //   geoService.geocode('marburg salegrund')
+        //     .then(console.log)
+        //     .catch(console.log);
+        //
         // });
 
 
-        //TODO
-        Geocoding.geocode({})
-                .text('marburg')
-                .run(function(err, results, response) {
-          console.log(results);
-        });
-        // results are not fine enough, cannot search street
 
+        // ensure also ability add address details in text-input
+        // and driver instructions
+        // for customer add support to select address by selecting from map directly
+        // (not all addresses are mapped)
+        // results are not fine enough, cannot search street
         // care! need to ensure to also watch the model and to pre-init
         // this must be the resolved address, not the coordinates
         // address should be saved not only with coordinates but name,display from geocoding
