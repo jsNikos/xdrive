@@ -1,4 +1,4 @@
-define(['resourceService'], function(resourceService) {
+define(['resourceService', 'jquery', 'q'], function(resourceService, jquery, q) {
   return new GeoService();
 
   function GeoService() {
@@ -14,9 +14,9 @@ define(['resourceService'], function(resourceService) {
       });
     };
 
-    this.suggest = function(address, country){
-      return resourceService.jsonp({
-        url: 'http://services.gisgraphy.com/fulltext/search',
+    this.suggest = function(address, country) {
+      return resourceService.ajax({
+        url: '/fulltext/search',
         data: {
           q: address,
           suggest: true,
@@ -24,7 +24,6 @@ define(['resourceService'], function(resourceService) {
           format: 'json'
         }
       });
-
     };
 
   }

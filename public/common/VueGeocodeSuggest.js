@@ -13,6 +13,8 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
 
       ready: function() {
         var vueScope = this;
+        var suggestRequest = undefined;
+        var requestTimeout = undefined;
         // var $datepicker = jquery(this.$el).find('.input-group.date');
         // $datepicker.datetimepicker();
         // $datepicker.data('DateTimePicker').date(this.$data.model);
@@ -29,32 +31,51 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
         $geocodeSuggest.selectivity({
           placeholder: this.$data.placeholder,
           query: function(search) {
-            geoService.suggest(search.term)
-              .then(function(response) {
-                var mapped = _.chain(response.result).map(function(result) {
-                  return {
-                    text: _.chain(result).pluck(['city', 'countryCode', 'name']).value().join(', '),
-                    id: result.id,
-                    latitude: result.lat,
-                    longitude: result.lng
-                  };
-                }).value();
-                search.callback({
-                  results: mapped
-                });
-              })
-              .catch(console.log);
+            if (requestTimeout != undefined) {
+              clearTimeout(requestTimeout);
+            }
+            requestTimeout = setTimeout(createSuggestionRequest, 300, search);
           }
         });
 
-        // require(['../admin/Page'], function(Page) {
-        //   new Page();
-        //
-        //   geoService.geocode('marburg salegrund')
-        //     .then(console.log)
-        //     .catch(console.log);
-        //
-        // });
+        $geocodeSuggest.on('selectivity-selected', function(event){
+          console.log(event.item); //TODO
+          // update the model
+        });
+
+        function createSuggestionRequest(search) {
+          if (suggestRequest) {
+            suggestRequest.abort();
+          }
+          suggestRequest = geoService.suggest(search.term);
+          suggestRequest
+            .then(function(response) {
+              var mapped = _.chain(response.response.docs).map(function(doc) {
+                return {
+                  text: extractDisplayName(doc),
+                  id: doc.feature_id,
+                  latitude: doc.lat,
+                  longitude: doc.lng
+                };
+              }).value();
+              search.callback({
+                results: mapped
+              });
+            })
+            .catch(function(err) {
+              if (err.statusText === 'abort') {} else {
+                console.log(err);
+              }
+            });
+        }
+
+        function extractDisplayName(doc) {
+          var props = ['name', 'country_code'];
+          if (doc.placetype === 'Street') {
+            props = ['name', 'is_in', 'country_code'];
+          }
+          return _.chain(doc).pick(props).values().value().join(', ');
+        }
 
 
 
@@ -62,11 +83,15 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
         // and driver instructions
         // for customer add support to select address by selecting from map directly
         // (not all addresses are mapped)
-        // results are not fine enough, cannot search street
         // care! need to ensure to also watch the model and to pre-init
         // this must be the resolved address, not the coordinates
         // address should be saved not only with coordinates but name,display from geocoding
-        // it must be the 'name' property in there
+        // after searching the map should go to the fromWhere/toWhere, if now clicking into the map
+        // the clicked location is resolved and taken as fromWhere/toWhere, this must be a one-time-listener
+        // and is connected with the last used fromWhere/toWhere
+        // housenumber search could be supported but is extention: (is prop in doc 'house_numbers')
+        // watch the bind-model value for changes and if discovered (or at init)
+        // preselect the suggestion (geocode??)
 
       }
     });

@@ -19,7 +19,7 @@ define(['text!drivers/editor.html', 'resourceService', 'jquery'], function(edito
 
     this.handleCreate = function(driver) {
       var vueScope = this;
-      resourceService.fetch({
+      resourceService.ajax({
           url: '/api/driver/addDriver',
           method: 'POST',
           data: {
@@ -39,7 +39,7 @@ define(['text!drivers/editor.html', 'resourceService', 'jquery'], function(edito
 
     this.handleUpdate = function(driver) {
       var vueScope = this;
-      resourceService.fetch({
+      resourceService.ajax({
           url: '/api/driver/updateDriver',
           method: 'POST',
           data: {
@@ -59,7 +59,7 @@ define(['text!drivers/editor.html', 'resourceService', 'jquery'], function(edito
 
     this.handleRemove = function(driver) {
       var vueScope = this;
-      resourceService.fetch({
+      resourceService.ajax({
           url: '/api/driver/removeDriver',
           method: 'POST',
           data: {

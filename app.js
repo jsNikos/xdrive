@@ -8,6 +8,7 @@ var driverAPI = require('./routes/driverAPI');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
+var httpProxy = require('http-proxy');
 
 var app = express();
 // globals
@@ -24,6 +25,14 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
+// proxying the geocode-suggests
+var proxy = httpProxy.createProxyServer({});
+proxy.on('error', console.log);
+app.get('/fulltext/search', function(req, res){
+  proxy.web(req, res, { target: 'http://services.gisgraphy.com' });
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false

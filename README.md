@@ -11,7 +11,12 @@ use vue/router, requirejs, bootstrap, jquery, express, mongoose
 
 - use this for the map http://leafletjs.com/reference.html
 
-- vue-router is used for routing, vue-resource to fetch from server
+- geocoding: http://www.gisgraphy.com/documentation/user-guide.htm#fulltextwebservice
+  Also for production must be downloaded (only DE or city) and installed as server
+
+- suggestion box: https://arendjr.github.io/selectivity/
+
+- vue-router is used for routing
   vue-validator cannot be used because not available for this version
   instead server-side validations are implemented on services
 

@@ -9,7 +9,7 @@ function(driversHtml, resourceService, _, ArrayUtils) {
       data: function() {
         var vueComp = this;
         resourceService
-          .fetch({
+          .ajax({
             url: '/api/driver/findAllDrivers',
             method: 'GET'
           })

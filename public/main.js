@@ -4,7 +4,6 @@ requirejs.config({
         jquery: '../bower_components/jquery/dist/jquery.min',
         Vue: '../bower_components/vue/dist/vue.min',
         VueRouter: '../bower_components/vue-router/dist/vue-router.min',
-        VueResource: '../bower_components/vue-resource/dist/vue-resource.min',
         text: '../bower_components/text/text',
         css: '../bower_components/require-css/css.min',
         q: '../bower_components/q/q',
