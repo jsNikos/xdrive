@@ -1,5 +1,5 @@
-define(['text!customerRequest/customerRequest.html', 'resourceService', 'VueDateTimePicker'],
-function(customerRequestHtml, resourceService, DateTimePickerComponent) {
+define(['text!customerRequest/customerRequest.html', 'resourceService', 'VueDateTimePicker', 'VueGeocodeSuggest'],
+function(customerRequestHtml, resourceService) {
   return CustomerRequestComponent;
 
   function CustomerRequestComponent() {

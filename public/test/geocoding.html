@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Geocoder Test</title>
+  <title>Geocoder Test</title>
 
 </head>
 
 <body>
-    <div id="map"></div>
-    <geocode-suggest v-bind:model.sync="customerRequest.fromWhere" v-bind:placeholder="placeholder"></geocode-suggest>
-    <p>{{customerRequest.fromWhere.name}}</p>
+  <div id="map"></div>
+  <geocode-suggest v-bind:model.sync="customerRequest.fromWhere" placeholder="Select an address"></geocode-suggest>
+  <p>{{customerRequest.fromWhere.name}}</p>
 
-    <script src="../bower_components/requirejs/require.js"></script>
-    <script src="../main.js"></script>
-    <script>
-        require(['Vue', 'VueGeocodeSuggest'], function(Vue) {
-          new Vue({el: 'body',
-        data:{
-          customerRequest: {fromWhere: undefined},
+  <script src="../bower_components/requirejs/require.js"></script>
+  <script src="../main.js"></script>
+  <script>
+    require(['Vue', 'VueGeocodeSuggest'], function(Vue) {
+      var root = new Vue({
+        el: 'body',
+        data: {
+          customerRequest: {
+            fromWhere: undefined
+          },
           placeholder: 'Select a Location'
-        }});
+        }
       });
-    </script>
+
+    });
+  </script>
 
 
 </body>
+
 </html>

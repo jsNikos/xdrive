@@ -6,15 +6,20 @@
       <form>
         <div class="form-group" v-bind:class="{'has-error': errors.fromWhere}">
           <label for="fromWhere">From Where</label>
-          <input type="text" class="form-control" id="fromWhere" v-model="customerRequest.fromWhere" placeholder="Address from where to start">
+          <geocode-suggest v-bind:model.sync="customerRequest.fromWhere" placeholder="Address from where to start"></geocode-suggest>
           <span v-if="errors.fromWhere" class="help-block">{{errors.fromWhere.message}}</span>
+        </div>
+
+        <div class="form-group" v-bind:class="{'has-error': errors.toWhere}">
+          <label for="toWhere">To Where</label>
+          <geocode-suggest v-bind:model.sync="customerRequest.toWhere" placeholder="Address to where to go"></geocode-suggest>
+          <span v-if="errors.toWhere" class="help-block">{{errors.toWhere.message}}</span>
         </div>
 
         <div class="form-group">
           <label for="forWhen">For When</label>
           <date-picker v-bind:model.sync="customerRequest.forWhen"></date-picker>
         </div>
-        <p>{{customerRequest.forWhen}}</p>
 
         <div class="form-group" v-bind:class="{'has-error': errors.driver}">
           <label for="driver">Assigned Driver</label>

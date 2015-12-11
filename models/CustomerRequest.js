@@ -12,17 +12,23 @@ module.exports = mongoose.model('CustomerRequest', new Schema({
     type: {
       latitude: Number,
       longitude: Number,
-      city: String,
+      is_in: String,
       country_code: String,
       name: String,
-      placetype: String
+      placetype: String,
+      feature_id: Number
     },
     required: true
   },
   toWhere: {
     type: {
       latitude: Number,
-      longitude: Number
+      longitude: Number,
+      is_in: String,
+      country_code: String,
+      name: String,
+      placetype: String,
+      feature_id: Number
     },
     required: true
   },
