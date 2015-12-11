@@ -11,7 +11,11 @@ module.exports = mongoose.model('CustomerRequest', new Schema({
   fromWhere: {
     type: {
       latitude: Number,
-      longitude: Number
+      longitude: Number,
+      city: String,
+      country_code: String,
+      name: String,
+      placetype: String
     },
     required: true
   },

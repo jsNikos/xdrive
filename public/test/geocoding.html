@@ -8,6 +8,7 @@
 <body>
     <div id="map"></div>
     <geocode-suggest v-bind:model.sync="customerRequest.fromWhere" v-bind:placeholder="placeholder"></geocode-suggest>
+    <p>{{customerRequest.fromWhere.name}}</p>
 
     <script src="../bower_components/requirejs/require.js"></script>
     <script src="../main.js"></script>

@@ -15,21 +15,11 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
         var vueScope = this;
         var suggestRequest = undefined;
         var requestTimeout = undefined;
-        // var $datepicker = jquery(this.$el).find('.input-group.date');
-        // $datepicker.datetimepicker();
-        // $datepicker.data('DateTimePicker').date(this.$data.model);
-        // $datepicker.on('dp.change', function(date){
-        //   vueScope.$set('model', date ? date.date.toDate() : null);
-        // });
-        //
-        // this.$watch('model', function(date){
-        //   $datepicker.data('DateTimePicker').date(this.$data.model);
-        // });
-        // var geocodeService = Geocoding.geocodeServiceProvider({useMapBounds: false});
 
         var $geocodeSuggest = jquery(this.$el).find('.input-group');
         $geocodeSuggest.selectivity({
           placeholder: this.$data.placeholder,
+          data: extractPreSelection(this.$data.model),
           query: function(search) {
             if (requestTimeout != undefined) {
               clearTimeout(requestTimeout);
@@ -38,10 +28,13 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
           }
         });
 
-        $geocodeSuggest.on('selectivity-selected', function(event){
-          console.log(event.item); //TODO
-          // update the model
+        $geocodeSuggest.on('selectivity-selected', function(event) {
+          vueScope.$set('model', event.item);
         });
+
+        // this.$watch('model', function(date){
+        //   $datepicker.data('DateTimePicker').date(this.$data.model);
+        // });
 
         function createSuggestionRequest(search) {
           if (suggestRequest) {
@@ -53,7 +46,11 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
               var mapped = _.chain(response.response.docs).map(function(doc) {
                 return {
                   text: extractDisplayName(doc),
+                  name: doc.name,
                   id: doc.feature_id,
+                  country_code: doc.country_code,
+                  city: doc.is_in,
+                  placetype: doc.placetype,
                   latitude: doc.lat,
                   longitude: doc.lng
                 };
@@ -69,6 +66,19 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
             });
         }
 
+        /**
+         * @param location: customerRequest.fromWhere/toWhere
+         **/
+        function extractPreSelection(location) {
+          if (!location) {
+            return undefined;
+          }
+          return _.extend(location, {
+            id: location.feature_id,
+            text: extractDisplayName(location)
+          });
+        }
+
         function extractDisplayName(doc) {
           var props = ['name', 'country_code'];
           if (doc.placetype === 'Street') {
@@ -76,8 +86,6 @@ define(['Vue', 'geoService', 'jquery', 'underscore', 'selectivity'],
           }
           return _.chain(doc).pick(props).values().value().join(', ');
         }
-
-
 
         // ensure also ability add address details in text-input
         // and driver instructions
